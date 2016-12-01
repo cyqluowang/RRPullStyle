@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingBottom="10dp"
+    android:paddingTop="10dp"
+    android:orientation="horizontal">
+
+    <RelativeLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:gravity="right"
+        android:layout_marginRight="5dp"
+        android:layout_gravity="right"
+        android:layout_weight="1">
+
+        <ImageView
+            android:id="@+id/ivFirst"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:scaleType="matrix"
+            android:src="@mipmap/pull_image"/>
+
+        <ImageView
+            android:id="@+id/ivSecond"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:src="@drawable/animation_refresh_second"
+            android:visibility="gone"/>
+
+        <ImageView
+            android:id="@+id/ivThird"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:src="@drawable/animation_refresh_third"
+            android:visibility="gone"/>
+    </RelativeLayout>
+    <TextView
+        android:id="@+id/tvMsg"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center|left"
+        android:layout_marginLeft="5dp"
+        android:layout_weight="1"
+        android:text="@string/cube_ptr_pull_down_to_refresh"
+        android:textColor="@android:color/white"
+        android:textSize="14sp"/>
+</LinearLayout>

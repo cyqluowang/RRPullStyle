@@ -1,4 +1,4 @@
-package com.renrun.onlywebview;
+package com.renrun.pullStyle;
 
 import android.content.Context;
 import android.graphics.Matrix;
@@ -9,12 +9,7 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-
 import com.socks.library.KLog;
-
-import butterknife.BindView;
-import butterknife.ButterKnife;
-
 import in.srain.cube.views.ptr.PtrFrameLayout;
 import in.srain.cube.views.ptr.PtrUIHandler;
 import in.srain.cube.views.ptr.indicator.PtrIndicator;
@@ -31,10 +26,10 @@ import in.srain.cube.views.ptr.indicator.PtrIndicator;
 
 public class RRPullHeadView extends LinearLayout implements PtrUIHandler {
 
-    @BindView(R.id.ivFirst) ImageView ivFirst;
-    @BindView(R.id.ivSecond) ImageView ivSecond;
-    @BindView(R.id.ivThird) ImageView ivThird;
-    @BindView(R.id.tvMsg) TextView tvMsg;
+    private ImageView ivFirst;
+    private ImageView ivSecond;
+    private ImageView ivThird;
+    private TextView tvMsg;
     private Matrix mMatrix = new Matrix();
 
     private AnimationDrawable mSecondAnimation;
@@ -51,7 +46,10 @@ public class RRPullHeadView extends LinearLayout implements PtrUIHandler {
     public RRPullHeadView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         View headerView = LayoutInflater.from(context).inflate(R.layout.header_renrun, this);
-        ButterKnife.bind(headerView);
+        ivFirst =(ImageView) headerView.findViewById(R.id.ivFirst);
+        ivSecond =(ImageView) headerView.findViewById(R.id.ivSecond);
+        ivThird =(ImageView) headerView.findViewById(R.id.ivThird);
+        tvMsg =(TextView) headerView.findViewById(R.id.tvMsg);
         init();
     }
 

@@ -1,24 +1,20 @@
 package com.renrun.onlywebview;
 
-import android.annotation.SuppressLint;
-import android.graphics.Bitmap;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
+import android.webkit.JavascriptInterface;
 import android.webkit.WebChromeClient;
-import android.webkit.WebResourceError;
-import android.webkit.WebResourceRequest;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
-import java.io.File;
+import com.renrun.pullStyle.PtrlRRFrameLayout;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import in.srain.cube.views.ptr.PtrClassicFrameLayout;
 import in.srain.cube.views.ptr.PtrDefaultHandler;
 import in.srain.cube.views.ptr.PtrFrameLayout;
 import in.srain.cube.views.ptr.PtrHandler;
@@ -26,7 +22,7 @@ import in.srain.cube.views.ptr.PtrHandler;
 public class MainActivity extends AppCompatActivity {
 
     @BindView(R.id.myWebview)WebView myWebView;
-    @BindView(R.id.ptr_frame) PtrlRRFrameLayout ptrFrame;
+    @BindView(R.id.ptr_frame)PtrlRRFrameLayout ptrFrame;
     private String  url = "http://www.renrunyun.com/chexinbao/login.html";
 //    private String  url = "http://demo3.renrunkeji.com:8816/chexinbao/login.html";
 
@@ -37,10 +33,6 @@ public class MainActivity extends AppCompatActivity {
         ButterKnife.bind(this);
         setWebView();
 
-
-//        final RRPullHeadView header = new RRPullHeadView(this);
-//        ptrFrame.setHeaderView(header);
-//        ptrFrame.addPtrUIHandler(header);
         ptrFrame.setPtrHandler(new PtrHandler() {
             @Override
             public boolean checkCanDoRefresh(PtrFrameLayout frame, View content, View header) {
@@ -58,7 +50,7 @@ public class MainActivity extends AppCompatActivity {
             public void run() {
                 ptrFrame.autoRefresh();
             }
-        }, 9000);
+        }, 100);
     }
 
     private void setWebView(){
@@ -80,6 +72,7 @@ public class MainActivity extends AppCompatActivity {
         myWebView.getSettings().setDatabaseEnabled(false);
         myWebView.getSettings().setAppCacheEnabled(false);
         myWebView.getSettings().setDefaultTextEncodingName("utf-8");
+        myWebView.addJavascriptInterface(new JsInteration(), "control");
         myWebView.setWebChromeClient(new WebChromeClient() {});
 
         myWebView.setSaveEnabled(false);
@@ -90,14 +83,7 @@ public class MainActivity extends AppCompatActivity {
             public void onPageFinished(WebView view, String url) {
                 super.onPageFinished(view, url);
                 MainActivity.this.url = url;
-
-
-                new Handler().postDelayed(new Runnable(){
-                    public void run() {
-                        ptrFrame.refreshComplete();
-                    }
-                }, 3000);
-
+                ptrFrame.refreshComplete();
             }
         });
     }
@@ -112,5 +98,19 @@ public class MainActivity extends AppCompatActivity {
             finish();
         }
         return super.onKeyDown(keyCode, event);
+    }
+
+
+    public class JsInteration {
+        /**
+         * js调用客户端函数
+         * 关闭网页
+         */
+        @JavascriptInterface
+        public void back() {
+           if(myWebView.canGoBack()){
+               myWebView.goBack();
+           }
+        }
     }
 }
